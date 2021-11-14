@@ -12,8 +12,9 @@ import spring.MemberRegisterService;
 import spring.VersionPrinter;
 
 @Configuration
-public class AppCtx {
-
+public class AppCtxNoMemberPrinterBean {
+	private MemberPrinter printer = new MemberPrinter();
+	
 	@Bean
 	public MemberDao memberDao() {
 		return new MemberDao();
@@ -32,20 +33,15 @@ public class AppCtx {
 	}
 	
 	@Bean
-	public MemberPrinter memberPrinter() {
-		return new MemberPrinter();
-	}
-	
-	@Bean
 	public MemberListPrinter listPrinter() {
-		return new MemberListPrinter(memberDao(), memberPrinter());
+		return new MemberListPrinter(memberDao(), printer);
 	}
 	
 	@Bean
 	public MemberInfoPrinter infoPrinter() {
 		MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
 		infoPrinter.setMemberDao(memberDao());
-		infoPrinter.setPrinter(memberPrinter());
+		infoPrinter.setPrinter(printer);
 		return infoPrinter;
 	}
 	
@@ -54,14 +50,6 @@ public class AppCtx {
 		VersionPrinter versionPrinter = new VersionPrinter();
 		versionPrinter.setMajorVersion(5);
 		versionPrinter.setMinorVersion(0);
-		return versionPrinter;
-	}
-	
-	@Bean
-	public VersionPrinter oldVersionPrinter() {
-		VersionPrinter versionPrinter = new VersionPrinter();
-		versionPrinter.setMajorVersion(4);
-		versionPrinter.setMinorVersion(3);
 		return versionPrinter;
 	}
 }
