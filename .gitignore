@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,maven
 
 */.gitignore
+BAK_spring5fs-master/*
 
 ### Eclipse ###
 .metadata
