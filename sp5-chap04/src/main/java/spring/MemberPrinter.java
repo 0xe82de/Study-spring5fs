@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MemberPrinter {
 	private DateTimeFormatter dateTimeFormatter;
+	
+	public MemberPrinter() {
+		dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+	}
 
 	public void print(Member member) {
 		if (dateTimeFormatter == null) {
