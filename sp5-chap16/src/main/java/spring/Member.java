@@ -2,7 +2,9 @@ package spring;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 public class Member {
 
@@ -11,6 +13,7 @@ public class Member {
 	@JsonIgnore
 	private String password;
 	private String name;
+	@JsonFormat(shape = Shape.STRING) // ISO-8601 형식으로 변환
 	private LocalDateTime registerDateTime;
 
 	public Member(String email, String password, 
