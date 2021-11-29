@@ -92,9 +92,16 @@ public class MemberDao {
 				new RowMapper<Member>() {
 					@Override
 					public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-						// TODO Auto-generated method stub
-						return null;
+						Member member = new Member(
+								rs.getString("EMAIL"),
+								rs.getString("PASSWORD"),
+								rs.getString("NAME"),
+								rs.getTimestamp("REGDATE").toLocalDateTime());
+						member.setId(rs.getLong("ID"));
+						return member;
 					}
-				})
+				},
+				from, to);
+		return results;
 	}
 }
