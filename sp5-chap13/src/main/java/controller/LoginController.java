@@ -1,6 +1,7 @@
 package controller;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,9 @@ public class LoginController {
 	}
 	
 	@PostMapping
-	public String submit(LoginCommand loginCommand, Errors errors, HttpSession session) {
+	public String submit(
+			LoginCommand loginCommand, Errors errors, HttpSession session,
+			HttpServletResponse response) {
 		new LoginCommandValidator().validate(loginCommand, errors);
 		if (errors.hasErrors()) {
 			return "login/loginForm";
@@ -47,7 +50,15 @@ public class LoginController {
 			
 			session.setAttribute("authInfo", authInfo);
 			
-			// TODO 세션에 authinfo 저장해야 함
+			Cookie rememberCookie = new Cookie("REMEMBER", loginCommand.getEmail());
+			rememberCookie.setPath("/");
+			if (loginCommand.isRememberEmail()) {
+				rememberCookie.setMaxAge(60 * 60 * 24 * 30);
+			} else {
+				rememberCookie.setMaxAge(0);
+			}
+			response.addCookie(rememberCookie);
+			
 			return "login/loginSuccess";
 		} catch (WrongIdPasswordException e) {
 			errors.reject("idPasswordNotMatching");
