@@ -3,6 +3,7 @@
 
 */.gitignore
 BAK_spring5fs-master/*
+Servers/*
 
 ### Eclipse ###
 .metadata
