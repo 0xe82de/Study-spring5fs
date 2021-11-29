@@ -2,11 +2,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+	<head>
+		<title>에러</title>
+	</head>
+	<body>
+		존재하지 않는 회원입니다.
+	</body>
 </html>
