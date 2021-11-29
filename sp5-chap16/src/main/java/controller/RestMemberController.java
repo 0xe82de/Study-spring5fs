@@ -3,12 +3,14 @@ package controller;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,7 +85,17 @@ public class RestMemberController {
 	
 	@PostMapping("/api/members")
 	public ResponseEntity<Object> newMember(
-			@RequestBody @Valid RegisterRequest regReq) {
+			@RequestBody @Valid RegisterRequest regReq,
+			Errors errors) {
+		if (errors.hasErrors()) {
+			String errorCodes = errors.getAllErrors() // List<ObjectError>
+					.stream()
+					.map(error -> error.getCodes()[0]) // error는 ObjectError
+					.collect(Collectors.joining(","));
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
 		try {
 			Long newMemberId = registerService.regist(regReq);
 			URI uri = URI.create("/api/members/" + newMemberId);
