@@ -14,13 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import controller.RegisterRequestValidator;
 
 @Configuration
-@EnableWebMvc
+@EnableWebMvc // OptionalValidatorFactoryBean을 글로벌 범위 Validator로 등록
 public class MvcConfig implements WebMvcConfigurer {
-
-	@Override
-	public Validator getValidator() {
-		return new RegisterRequestValidator();
-	}
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
