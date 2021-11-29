@@ -1,9 +1,11 @@
 package controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,12 @@ public class LoginController {
 	}
 	
 	@GetMapping
-	public String form(LoginCommand loginCommand) {
+	public String form(LoginCommand loginCommand,
+			@CookieValue(value = "REMEMBER", required = false) Cookie rCookie) {
+		if (rCookie != null) {
+			loginCommand.setEmail(rCookie.getValue());
+			loginCommand.setRememberEmail(true);
+		}
 		return "login/loginForm";
 	}
 	
