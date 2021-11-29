@@ -14,7 +14,7 @@ public class Member {
 	private String password;
 	private String name;
 //	@JsonFormat(shape = Shape.STRING) // ISO-8601 형식으로 변환
-	@JsonFormat(pattern = "yyyyMMddHHmmss")
+//	@JsonFormat(pattern = "yyyyMMddHHmmss")
 	private LocalDateTime registerDateTime;
 
 	public Member(String email, String password, 
